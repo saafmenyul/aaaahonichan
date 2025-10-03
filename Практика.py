@@ -1,13 +1,12 @@
 n = int(input())
-length = 1
-count = 9
-start = 1
-while n > length * count:
-    n -= length * count
-    length += 1
-    count *= 10
-    start *= 10
-num = start + (n - 1) // length
-a = str(num)
-final = a[(n - 1) % length]
-print(final)
+a = ''
+c = 1
+e = n
+f = 1
+while n > 0:
+    a= str(c)
+    n -= f
+    c += 1
+    if len(str(c)) != f:
+        f += 1
+print(int(a[(n-1) % f]))
