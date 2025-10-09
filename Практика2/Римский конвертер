@@ -1,0 +1,44 @@
+all_roman = [(1000, 'M'), (900, 'CM'), (500, 'D'), (400, 'CD'), (100, 'C'), (90, 'XC'), (50, 'L'), (40, 'XL'), (10, 'X'), (9, 'IX'), (5, 'V'), (4, 'IV'), (1, 'I')]
+check = ['M', 'D', 'C', 'L', 'X', 'V', 'I']
+print("Из какой системы в какую надо перевести?")
+print("Из римской в десятичную введите: 1")
+print("Из десятичной в римскую введите: 2")
+num = int(input())
+if num != 1 and num != 2:
+    print("Вы ввели что-то не то")
+if num == 1:
+    test = True
+    print("Введите число в формате: XXIC")
+    number = input()
+    for i in number:
+        if i not in check:
+            test = False
+            print("Вы ввели что-то не то")
+        break
+    if test:
+        dec = 0
+        index = 0
+        while index < len(number):
+            for i, j in all_roman:
+                if number[index:index+len(j)] == j:
+                    dec += i
+                    index += len(j)
+                    break
+        print(dec)
+else:
+    test = True
+    print("Введите число в формате: 12312")
+    roman = ''
+    number = input()
+    for i in number:
+        if i in check:
+            print("Вы ввели что-то не то")
+            test = False
+            break
+    if test:
+        number = int(number)
+        for i, r in all_roman:
+            while number >= i:
+                roman += r
+                number -= i
+        print(roman)
