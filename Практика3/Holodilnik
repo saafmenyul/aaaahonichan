@@ -1,0 +1,72 @@
+import datetime
+from decimal import Decimal
+
+
+def add(items: dict[str, list[dict]], title: str, amount: Decimal, expiration_date: datetime = None):
+    # Если expiration_date передана как строка, преобразуем в объект date
+    if isinstance(expiration_date, str):
+        expiration_date = datetime.datetime.strptime(expiration_date, r'%Y-%m-%d').date()
+    # Создаем новую партию товара
+    new_batch = {
+        'amount': amount,
+        'expiration_date': expiration_date
+    }
+    # Добавляем партию к товару (создаем список если товара еще нет)
+    if title not in items:
+        items[title] = []
+    items[title].append(new_batch)
+
+
+def add_by_note(items, note):
+    # Разделяем строку на части
+    parts = note.split()
+    if len(parts) < 2:
+        return  # Недостаточно данных
+    # Проверяем, является ли последняя часть датой
+    last_part = parts[-1]
+    expiration_date = None
+    # Проверяем формат даты: должен содержать 2 дефиса и все части должны быть цифрами
+    if last_part.count('-') == 2:
+        date_parts = last_part.split('-')
+        if len(date_parts) == 3 and all(part.isdigit() for part in date_parts):
+            expiration_date = last_part
+            # Если дата найдена, убираем ее из частей
+            parts = parts[:-1]
+    # Проверяем, является ли последняя часть числом
+    amount_str = parts[-1]
+    amount_value = None
+    # Проверяем, можно ли преобразовать в число
+    if amount_str.replace('.', '').replace(',', '').isdigit():
+        amount_str_clean = amount_str.replace(',', '.')
+        amount_value = Decimal(amount_str_clean)
+        # Если количество найдено, убираем его из частей
+        parts = parts[:-1]
+    else:
+        # Если это не число, используем количество по умолчанию
+        amount_value = Decimal('1')
+    # Оставшиеся части объединяем в название продукта
+    title = ' '.join(parts)
+    # Вызываем функцию add с полученными данными
+    add(items, title, amount_value, expiration_date)
+
+
+def find(items, needle):
+    result = []
+    needle_lower = needle.lower()  # Приводим к нижнему регистру
+    # Перебираем все названия товаров
+    for title in items.keys():
+        # Проверяем наличие подстроки в названии товара
+        if needle_lower in title.lower():
+            result.append(title)    
+    return result
+
+
+def amount(items, needle):
+    # Находим продукты по подстроке
+    found_products = find(items, needle)
+    total_amount = Decimal('0')
+    # Суммируем количество всех партий найденных продуктов
+    for product_title in found_products:
+        for batch in items[product_title]:
+            total_amount += batch['amount']    
+    return total_amount
