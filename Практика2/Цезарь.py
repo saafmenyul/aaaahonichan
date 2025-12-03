@@ -1,19 +1,31 @@
-def f(text, shift):
-    new_text = ""
-    new_text_desh = ""
+def caesar_cipher(text, shift):
+    """
+    Применяет сдвиг к каждому символу, кроме пробела:
+    - шифрует: сдвиг вперёд на заданный шаг
+    - дешифрует: сдвиг назад на заданный шаг
+    Возвращает кортеж: (зашифрованный_текст, расшифрованный_текст)
+    """
+    encrypted = ""   # Зашифрованная строка
+    decrypted = ""   # Расшифрованная строка
+
     for char in text:
         if char != " ":
-            new_text += chr(ord(char) + shift)
-            new_text_desh += chr(ord(char) - shift)
+            encrypted += chr(ord(char) + shift)
+            decrypted += chr(ord(char) - shift)
         else:
-            new_text += " "
-            new_text_desh += " "
-    return new_text, new_text_desh
+            encrypted += " "
+            decrypted += " "
+
+    return encrypted, decrypted
 
 
+# Вводим данные
 text = input()
 shift = int(input())
-result = []
-for i in f(text, shift):
-    result.append(i)
-print(f"Шифрованный текст: {result[0]}, Дешифрованный текст: {result[1]}")
+
+# Применяем шифрование и дешифрование
+encrypted_text, decrypted_text = caesar_cipher(text, shift)
+
+# Выводим результат
+print(f"Шифрованный текст: {encrypted_text}, "
+      f"Дешифрованный текст: {decrypted_text}")
