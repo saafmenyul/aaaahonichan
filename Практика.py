@@ -9,4 +9,6 @@ while n > 0:
     c += 1
     if len(str(c)) != f:
         f += 1
+
+
 print(int(a[(n-1) % f]))
