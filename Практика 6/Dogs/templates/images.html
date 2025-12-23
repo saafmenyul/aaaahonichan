@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dog Images</title>
+</head>
+<body>
+    <h1>Изображения собак</h1>
+    
+    {% if images_by_breed %}
+        {% for breed, images in images_by_breed.items %}
+            <h2>Порода: {{ breed }}</h2>
+            {% if images %}
+                {% for image in images %}
+                    <img src="{{ image }}" alt="{{ breed }}" style="max-width: 300px; margin: 10px;">
+                {% endfor %}
+            {% else %}
+                <p>Изображения не найдены для породы: {{ breed }}</p>
+            {% endif %}
+            <hr>
+        {% endfor %}
+    {% else %}
+        <p>Нет данных для отображения</p>
+    {% endif %}
+    
+    <a href="{% url 'index' %}">Вернуться к списку пород</a>
+</body>
+</html>
+

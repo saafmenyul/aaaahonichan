@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dog Breeds</title>
+</head>
+<body>
+    <h1>Список пород собак</h1>
+    
+    <ol>
+        {% for number, breed in breeds %}
+        <li>{{ breed }}</li>
+        {% endfor %}
+    </ol>
+    
+    <h2>Введите породы собак (через запятую):</h2>
+    <form method="post" action="{% url 'images' %}">
+        {% csrf_token %}
+        <input type="text" name="breeds" placeholder="african, chow, dingo" style="width: 300px;">
+        <button type="submit">Показать изображения</button>
+    </form>
+</body>
+</html>
+
