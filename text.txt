@@ -1,0 +1,20 @@
+project-summarizer/
+├── src/
+│   ├── __init__.py
+│   ├── summarizer.py
+│   ├── file_handler.py
+│   └── language_support.py
+├── tests/
+│   ├── __init__.py
+│   ├── test_summarizer.py
+│   └── test_language_support.py
+├── data/
+│   ├── sample_en.txt
+│   ├── sample_ru.txt
+│   └── sample_de.txt
+├── docs/
+│   └── README.md
+├── .gitignore
+├── requirements.txt
+├── README.md
+└── setup.py
